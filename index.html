@@ -162,17 +162,31 @@
         color: #111;
     }
 
-    .next-btn {
-        width: 100%;
-        padding: 15px;
+    .btn-row {
+        display: flex;
+        gap:12px;
         margin-top: 18px;
+    }
+    .prev-btn,.next-btn {
+        flex:1;
+        padding: 15px;
         border: none;
         border-radius: 999px;
-        background: #6366f1;
-        color: #fff;
         font-size: 16px;
         font-weight: 700;
         cursor: pointer;
+    }
+    .prev-btn{
+        background:#e5e7eb;
+        color:#444;
+    }
+    .prev-btn:disabled{
+        opacity:0.45;
+        cursor:not-allowed;
+    }
+    .next-btn{
+        background: #6366f1;
+        color: #fff;
     }
 
     .result {
@@ -246,12 +260,10 @@
 
 <body>
     <div class="container">
-        <!-- 顶部小导航，参考截图格式 -->
         <div class="header">
             <a href="#" class="back-link">← 心理测试</a>
         </div>
 
-        <!-- 首页 -->
         <div id="home">
             <div class="home-card">
                 <span class="test-label">心理测试</span>
@@ -272,17 +284,18 @@
             </div>
         </div>
 
-        <!-- 测试页 -->
         <div id="questionWrap" class="question">
             <div class="progress">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
             <div class="q-title" id="qText"></div>
             <div id="optWrap"></div>
-            <button class="next-btn" onclick="nextQ()">下一题</button>
+            <div class="btn-row">
+                <button class="prev-btn" id="prevBtn" onclick="prevQ()">上一题</button>
+                <button class="next-btn" onclick="nextQ()">下一题</button>
+            </div>
         </div>
 
-        <!-- 结果页 -->
         <div id="resultWrap" class="result">
             <div class="result-label">测试结果</div>
             <div class="result-title" id="resTitle"></div>
@@ -294,6 +307,8 @@
 
     <script>
         const keyName = "xiyou_test_done";
+        let answerArr = []; // 保存每一题选择
+        let cur = 0;
 
         if (localStorage.getItem(keyName)) {
             showResult();
@@ -369,26 +384,25 @@
             { title: "🐉 潜龙白龙", content: "内敛自持，有远大志向，隐忍蓄力。平时低调，等到时机成熟，才会展露自己真正的力量。" }
         ];
 
-        let score = 0;
-        let cur = 0;
-        let picked = -1;
-
         function startTest() {
             document.getElementById("home").style.display = "none";
             document.getElementById("questionWrap").style.display = "block";
+            cur = 0;
+            answerArr = [];
             renderQ();
         }
 
         function renderQ() {
             const q = questions[cur];
             const progress = Math.round(((cur + 1) / questions.length) * 100);
-
             document.getElementById("progressBar").style.width = progress + "%";
             document.getElementById("qText").innerText = `${cur + 1}. ${q.q}`;
+            document.getElementById("prevBtn").disabled = cur === 0;
 
             let html = "";
             q.o.forEach((item, i) => {
-                html += `<div class="option" onclick="pickOpt(${i},this)">${item}</div>`;
+                let active = answerArr[cur] === i ? "active" : "";
+                html += `<div class="option ${active}" onclick="pickOpt(${i},this)">${item}</div>`;
             });
             document.getElementById("optWrap").innerHTML = html;
         }
@@ -396,45 +410,48 @@
         function pickOpt(i, dom) {
             document.querySelectorAll(".option").forEach(el => el.classList.remove("active"));
             dom.classList.add("active");
-            picked = i;
+            answerArr[cur] = i;
         }
 
         function nextQ() {
-            if (picked === -1) {
+            if (answerArr[cur] === undefined) {
                 alert("请选一个答案哦");
                 return;
             }
-
-            score += questions[cur].d[picked];
             cur++;
-            picked = -1;
-
             if (cur >= questions.length) {
                 localStorage.setItem(keyName, "1");
                 showResult();
                 return;
             }
-
             renderQ();
+        }
+
+        function prevQ() {
+            if(cur > 0){
+                cur--;
+                renderQ();
+            }
         }
 
         function showResult() {
             document.getElementById("home").style.display = "none";
             document.getElementById("questionWrap").style.display = "none";
             document.getElementById("resultWrap").style.display = "block";
-
-            let resIdx = Math.floor(score / 5);
+            let totalScore = 0;
+            answerArr.forEach((optIdx, idx)=>{
+                totalScore += questions[idx].d[optIdx];
+            })
+            let resIdx = Math.floor(totalScore / 5);
             if (resIdx >= resultData.length) resIdx = resultData.length - 1;
-
             const res = resultData[resIdx];
             document.getElementById("resTitle").innerText = res.title;
             document.getElementById("resContent").innerText = res.content;
-
             document.getElementById("barBox").innerHTML = `
-                <div class="bar-row"><span class="bar-label">决断力</span><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(score / 120 * 100, 100)}%"></div></div></div>
-                <div class="bar-row"><span class="bar-label">共情力</span><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(score / 120 * 100, 100)}%"></div></div></div>
-                <div class="bar-row"><span class="bar-label">开创力</span><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(score / 120 * 100, 100)}%"></div></div></div>
-                <div class="bar-row"><span class="bar-label">洞察力</span><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(score / 120 * 100, 100)}%"></div></div></div>
+                <div class="bar-row"><span class="bar-label">决断力</span><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(totalScore / 120 * 100, 100)}%"></div></div></div>
+                <div class="bar-row"><span class="bar-label">共情力</span><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(totalScore / 120 * 100, 100)}%"></div></div></div>
+                <div class="bar-row"><span class="bar-label">开创力</span><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(totalScore / 120 * 100, 100)}%"></div></div></div>
+                <div class="bar-row"><span class="bar-label">洞察力</span><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(totalScore / 120 * 100, 100)}%"></div></div></div>
             `;
         }
     </script>
