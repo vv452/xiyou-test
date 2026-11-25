@@ -1,563 +1,326 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>你是西游记里的谁｜人格测试</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
-body{background:#f5f6f8;padding:16px;max-width:700px;margin:0 auto;}
-.page{display:none;}
-.page.active{display:block;}
-.card{background:#fff;border-radius:16px;padding:24px;margin-bottom:16px;}
-
-/* 封面页样式 */
-.top-nav{display:flex;align-items:center;gap:6px;font-size:15px;color:#9aa0ad;padding:6px 4px 18px;}
-.top-nav .arrow{font-size:16px;}
-.cover-card{background:#fff;border-radius:24px;padding:30px 26px;box-shadow:0 10px 30px rgba(0,0,0,0.08);}
-.intro-label{display:inline-block;background:#eef2ff;color:#6366f1;font-size:14px;padding:7px 16px;border-radius:999px;margin-bottom:22px;}
-.intro-title{font-size:34px;font-weight:800;letter-spacing:0;color:#111;line-height:1.2;margin-bottom:18px;}
-.intro-sub{font-size:17px;color:#666;line-height:1.8;}
-.intro-sub .line2{margin-top:4px;}
-.info-card{background:#f7f8fa;border-radius:18px;padding:22px 20px;margin:28px 0;}
-.info-card h3{font-size:17px;font-weight:700;color:#222;margin-bottom:14px;}
-.info-card p{font-size:15px;color:#555;line-height:1.9;margin-bottom:14px;}
-.info-card .tip{text-align:center;color:#999;font-size:14px;margin-bottom:0;}
-.start-btn{width:100%;padding:17px;border:none;border-radius:999px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:18px;font-weight:700;letter-spacing:.02em;cursor:pointer;box-shadow:0 8px 20px rgba(99,102,241,0.35);transition:transform 0.15s ease;}
-.start-btn:active{transform:scale(0.98);}
-
-/* 答题页样式 */
-.progress{text-align:center;color:#666;margin-bottom:16px;font-size:14px;}
-.q-card{min-height:320px;display:flex;flex-direction:column;justify-content:center;}
-.q-index{color:#888;font-size:14px;margin-bottom:12px;}
-.q-title{font-size:18px;font-weight:500;margin-bottom:30px;line-height:1.6;}
-.option{padding:14px 16px;border:1px solid #dde2ec;border-radius:12px;margin-bottom:12px;cursor:pointer;transition:0.2s;font-size:16px;}
-.option:hover{border-color:#7b61ff;background:#f6f4ff;}
-.option.selected{border-color:#7b61ff;background:#7b61ff;color:#fff;}
-.btn-row{display:flex;gap:12px;margin-top:24px;}
-button{flex:1;padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;}
-.btn-prev{background:#eee;color:#333;}
-.btn-next{background:#7b61ff;color:#fff;}
-button:disabled{opacity:0.4;cursor:not-allowed;}
-
-/* 结果页样式 */
-.result-header{text-align:center;margin-bottom:20px;}
-.match-percent{font-size:48px;font-weight:bold;color:#7b61ff;margin:8px 0;}
-.tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0;}
-.tag{background:#f0edff;color:#7b61ff;padding:4px 12px;border-radius:99px;font-size:14px;}
-.voice{font-style:italic;color:#666;margin:12px 0;font-size:15px;}
-.section-title{font-weight:bold;font-size:17px;margin:20px 0 10px;color:#222;}
-.bar-wrap{margin:8px 0;}
-.bar-line{display:flex;align-items:center;gap:8px;}
-.bar-name{width:70px;font-size:14px;}
-.bar-bg{flex:1;height:10px;background:#e8e8f0;border-radius:99px;overflow:hidden;}
-.bar-fill{height:100%;background:#7b61ff;border-radius:99px;}
-.bar-val{width:30px;text-align:right;font-size:14px;}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0;}
-.grid-item{background:#f7f8fc;padding:12px;border-radius:10px;font-size:14px;line-height:1.6;}
-.grid-item b{display:block;margin-bottom:4px;color:#444;}
-.warn{background:#fff3f3;padding:14px;border-radius:12px;margin-top:20px;font-size:14px;color:#666;line-height:1.7;}
-.used-wrap{text-align:center;padding:40px 24px;user-select:none;}
-.used-icon{font-size:52px;margin-bottom:12px;}
-.used-wrap h1{font-size:20px;font-weight:600;margin-bottom:12px;color:#222;}
-.used-tip{font-size:15px;color:#666;line-height:1.7;margin-bottom:20px;}
-
-@media (max-width:400px){
-  body{padding:12px;}
-  .cover-card{padding:22px 18px;}
-  .q-title{font-size:17px;}
-  .intro-title{font-size:27px;}
-  .grid3{grid-template-columns:1fr;}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你是西游记里的谁</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        body {
+            background-color: #f8f5f0;
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .home-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+        .home-box h1 {
+            font-size: 24px;
+            color: #7b4b28;
+            margin-bottom: 16px;
+        }
+        .home-box p {
+            line-height: 1.7;
+            color: #666;
+            margin-bottom: 24px;
+        }
+        .start-btn {
+            background-color: #9c6b43;
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 99px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .question-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .q-index {
+            color: #9c6b43;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .q-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .option-item {
+            padding: 14px 16px;
+            border: 1px solid #e2d8cc;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+        .option-item:hover {
+            background-color: #f8f1e9;
+        }
+        .option-item.selected {
+            background-color: #9c6b43;
+            color: white;
+            border-color: #9c6b43;
+        }
+        .btn-group {
+            display: flex;
+            gap:12px;
+            margin-top:24px;
+        }
+        .prev-btn {
+            flex:1;
+            background: #eee;
+            border:none;
+            padding:12px;
+            border-radius:99px;
+            font-size:15px;
+            cursor:pointer;
+        }
+        .next-btn {
+            flex:1;
+            background:#9c6b43;
+            color:white;
+            border:none;
+            padding:12px;
+            border-radius:99px;
+            font-size:15px;
+            cursor:pointer;
+        }
+        .result-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .result-name {
+            font-size:26px;
+            color:#7b4b28;
+            text-align:center;
+            font-weight:bold;
+            margin-bottom:16px;
+        }
+        .result-tag {
+            text-align:center;
+            color:#9c6b43;
+            margin-bottom:20px;
+        }
+        .result-desc {
+            line-height:1.7;
+            margin-bottom:16px;
+        }
+        .restart-btn {
+            width:100%;
+            margin-top:24px;
+            background:#9c6b43;
+            color:white;
+            border:none;
+            padding:14px;
+            border-radius:99px;
+            font-size:16px;
+            cursor:pointer;
+        }
+    </style>
 </head>
 <body>
-
-<!-- ===== 封面介绍页 ===== -->
-<div id="page-intro" class="page active">
-  <div class="top-nav"><span class="arrow">←</span>心理测试</div>
-  <div class="cover-card">
-    <div class="intro-label">心理测试</div>
-    <div class="intro-title">你是西游记里的谁</div>
-    <div class="intro-sub">
-      <div>40题｜8维度人格测试</div>
-      <div class="line2">测测你的性格最贴合西游哪一位角色</div>
+<div class="container">
+    <!--首页-->
+    <div class="page active" id="homePage">
+        <div class="home-box">
+            <h1>你是西游记里的谁</h1>
+            <p>这套测试一共有40道题，根据你的选择，找到和你性格最贴合的西游角色。<br>答案没有好坏之分，只是看见属于你的特质。</p>
+            <button class="start-btn" onclick="startTest()">开始测试</button>
+        </div>
     </div>
-
-    <div class="info-card">
-      <h3>测试介绍</h3>
-      <p>这是一个基于人格维度设计的趣味测试，通过你的选择判断性格倾向。</p>
-      <p>题目没有标准答案，按第一反应选择即可。</p>
-      <p class="tip">预计用时 5–8 分钟，仅供娱乐参考。</p>
+    <!--答题页-->
+    <div class="page" id="quizPage">
+        <div class="question-box">
+            <div class="q-index" id="qIndex"></div>
+            <div class="q-title" id="qTitle"></div>
+            <div id="optionWrap"></div>
+            <div class="btn-group">
+                <button class="prev-btn" id="prevBtn" onclick="prevQuestion()">上一题</button>
+                <button class="next-btn" id="nextBtn" onclick="nextQuestion()">下一题</button>
+            </div>
+        </div>
     </div>
-
-    <button class="start-btn" onclick="startTest()">开始测试</button>
-  </div>
-</div>
-
-<!-- ===== 答题页 ===== -->
-<div id="page-test" class="page">
-<div class="progress">第 <span id="current-q">1</span> / 40 题</div>
-<div class="card q-card">
-  <div class="q-index">西游记人格测试</div>
-  <div class="q-title" id="q-text"></div>
-  <div id="opt-wrap"></div>
-</div>
-<div class="btn-row">
-  <button class="btn-prev" id="btn-prev" onclick="prevQuestion()">上一题</button>
-  <button class="btn-next" id="btn-next" onclick="nextQuestion()">下一题</button>
-</div>
-</div>
-
-<!-- ===== 结果页 ===== -->
-<div id="page-result" class="page">
-  <div class="card">
-    <div class="result-header">
-      <div>你的西游记人物匹配结果</div>
-      <div class="match-percent" id="resPercent">--</div>
-      <div id="resName" style="font-size:22px;font-weight:700;margin:6px 0;"></div>
-      <div class="tags" id="resTags"></div>
-      <div class="voice" id="resVoice"></div>
+    <!--结果页-->
+    <div class="page" id="resultPage">
+        <div class="result-box">
+            <div class="result-name" id="resName"></div>
+            <div class="result-tag" id="resTag"></div>
+            <div class="result-desc" id="resText"></div>
+            <button class="restart-btn" onclick="restartTest()">重新测试</button>
+        </div>
     </div>
-
-    <div class="section-title">01 人物自画像</div>
-    <div id="resSelf" style="line-height:1.8;color:#444;"></div>
-
-    <div class="section-title">02 八维能力结构</div>
-    <div id="barBox"></div>
-
-    <div class="section-title">03 你与TA的共同底色</div>
-    <div class="grid3">
-      <div class="grid-item"><b>第一底色</b><span id="base1"></span></div>
-      <div class="grid-item"><b>隐藏天赋</b><span id="base2"></span></div>
-      <div class="grid-item"><b>长期优势</b><span id="base3"></span></div>
-    </div>
-
-    <div class="section-title">04 现实中的你</div>
-    <div id="resReal" style="line-height:1.8;color:#444;"></div>
-
-    <div class="section-title">05 性格盲点与风险提醒</div>
-    <div class="grid3">
-      <div class="grid-item"><b>可能的盲点</b><span id="risk1"></span></div>
-      <div class="grid-item"><b>风险提醒</b><span id="risk2"></span></div>
-      <div class="grid-item"><b>给你的建议</b><span id="risk3"></span></div>
-    </div>
-
-    <div class="warn">
-      ⚠️ 趣味心理测试，仅供自我探索娱乐参考，不是专业心理测评，请勿当作诊断依据。
-    </div>
-  </div>
-</div>
-
-<!-- ===== 已使用存档页 ===== -->
-<div id="page-used" class="page">
-<div class="card used-wrap">
-<div class="used-icon">🔒</div>
-<h1>本次测试已完成</h1>
-<div class="used-tip">本设备已使用过这次测试，每人仅限一次，结果已为你存档，可直接查看。</div>
-</div>
 </div>
 
 <script>
-// 维度顺序：决断,共情,开创,洞察,表达,统筹,独立,担当
+// 四维：E/I 外向内向 | S/N 现实直觉 | T/F理性感性 | J/P计划随性
 const questions = [
-  {q:"遇到突发难题你会？",a:"立刻处理，不拖延",b:"焦虑纠结，缓一缓",w:[2,0,1,0,0,0,1,0]},
-  {q:"机会来临但有风险，你会？",a:"大胆争取",b:"谨慎观望",w:[2,0,1,0,0,0,1,0]},
-  {q:"与人观点冲突你会？",a:"坚持自我立场",b:"习惯性妥协",w:[2,0,1,0,0,0,1,0]},
-  {q:"生活卡住停滞不前，你会？",a:"主动破局改变",b:"原地忍耐耗着",w:[2,0,1,0,0,0,1,0]},
-  {q:"别人压迫你，你会？",a:"直接反抗",b:"默默忍受",w:[2,0,1,0,0,0,1,0]},
-  {q:"受挫之后你的状态？",a:"自愈很快",b:"久久走不出来",w:[0,2,0,1,0,0,0,0]},
-  {q:"被人误解你的反应？",a:"无所谓不解释",b:"心里反复内耗",w:[0,2,0,1,0,0,0,0]},
-  {q:"深夜状态？",a:"踏实安稳",b:"胡思乱想焦虑",w:[0,2,0,1,0,0,0,0]},
-  {q:"面对失败？",a:"看淡重来",b:"自我否定",w:[0,2,0,1,0,0,0,0]},
-  {q:"压力大时？",a:"自我调节",b:"情绪崩溃",w:[0,2,0,1,0,0,0,0]},
-  {q:"休息更喜欢？",a:"热闹社交",b:"独处安静",w:[0,1,0,0,2,0,0,0]},
-  {q:"和陌生人相处？",a:"自然大方",b:"拘谨慢热",w:[0,1,0,0,2,0,0,0]},
-  {q:"心事更愿意？",a:"找人倾诉",b:"自己消化",w:[0,1,0,0,2,0,0,0]},
-  {q:"别人求助你？",a:"有边界懂拒绝",b:"心软全包揽",w:[0,1,0,0,2,0,0,0]},
-  {q:"你更擅长？",a:"带动氛围",b:"默默陪伴",w:[0,1,0,0,2,0,0,0]},
-  {q:"对待输赢？",a:"不甘平庸要强",b:"随缘不争",w:[0,0,1,0,0,0,2,0]},
-  {q:"付出没回报？",a:"不甘心坚持",b:"坦然放下",w:[0,0,1,0,0,0,2,0]},
-  {q:"未来规划？",a:"焦虑上进安排满",b:"松弛随心",w:[0,0,1,0,0,0,2,0]},
-  {q:"别人优秀你会？",a:"对标追赶",b:"无感祝福",w:[0,0,1,0,0,0,2,0]},
-  {q:"生活态度？",a:"拼命努力",b:"享受当下",w:[0,0,1,0,0,0,2,0]},
-  {q:"做决定靠？",a:"逻辑利弊",b:"直觉感受",w:[0,0,0,2,0,0,0,0]},
-  {q:"朋友诉苦你会？",a:"分析对错",b:"共情安慰",w:[0,0,0,2,0,0,0,0]},
-  {q:"看待世界？",a:"现实清醒",b:"温柔浪漫",w:[0,0,0,2,0,0,0,0]},
-  {q:"处理矛盾？",a:"对事不对人",b:"优先照顾情绪",w:[0,0,0,2,0,0,0,0]},
-  {q:"做人底线？",a:"原则第一",b:"人情第一",w:[0,0,0,2,0,0,0,0]},
-  {q:"能力才华？",a:"自信外放",b:"低调内敛",w:[0,0,0,0,0,0,2,0]},
-  {q:"受委屈？",a:"当场表达",b:"藏在心里",w:[0,0,0,0,0,0,2,0]},
-  {q:"性格偏向？",a:"热烈直白",b:"清冷克制",w:[0,0,0,0,0,0,2,0]},
-  {q:"遇事态度？",a:"敢爱敢恨",b:"温柔包容",w:[0,0,0,0,0,0,2,0]},
-  {q:"情绪表达？",a:"外放明显",b:"隐藏很深",w:[0,0,0,0,0,0,2,0]},
-  {q:"最讨厌？",a:"被管束束缚",b:"计划被打乱",w:[0,0,0,0,0,2,0,0]},
-  {q:"做事习惯？",a:"随性灵活",b:"严谨细致",w:[0,0,0,0,0,2,0,0]},
-  {q:"生活节奏？",a:"随心所欲",b:"井井有条",w:[0,0,0,0,0,2,0,0]},
-  {q:"处理工作？",a:"灵感型拖延",b:"提前完成",w:[0,0,0,0,0,2,0,0]},
-  {q:"面对规则？",a:"喜欢突破",b:"遵守服从",w:[0,0,0,0,0,2,0,0]},
-  {q:"被伤害后？",a:"释怀很快",b:"很难原谅",w:[0,0,0,0,0,0,0,2]},
-  {q:"看待得失？",a:"看淡随缘",b:"计较付出",w:[0,0,0,0,0,0,0,2]},
-  {q:"别人犯错？",a:"愿意包容",b:"介意耿耿于怀",w:[0,0,0,0,0,0,0,2]},
-  {q:"人际相处？",a:"大度通透",b:"敏感细腻",w:[0,0,0,0,0,0,0,2]},
-  {q:"人生底色？",a:"向阳豁达",b:"多思多虑",w:[0,0,0,0,0,0,0,2]},
+    {title:"遇到麻烦，你更倾向？",opts:["立刻找人帮忙(E)","先自己扛着想想(I)"]},
+    {title:"做决定时，你更看重？",opts:["实际情况(S)","直觉感受(N)"]},
+    {title:"吵架的时候，你优先？",opts:["讲道理(T)","照顾情绪(F)"]},
+    {title:"周末安排，你喜欢？",opts:["提前规划好(J)","随心走看心情(P)"]},
+    {title:"有新想法，你会？",opts:["马上找人分享(E)","先放在心里琢磨(I)"]},
+    {title:"看待一件事，更容易相信？",opts:["亲眼所见(S)","预感和联想(N)"]},
+    {title:"别人求助你，你第一反应？",opts:["客观评估能不能帮(T)","不忍心拒绝(F)"]},
+    {title:"任务截止前，你习惯？",opts:["早点做完(J)","临近再动手(P)"]},
+    {title:"长时间独处后你会？",opts:["想找人聊天(E)","觉得很舒服(I)"]},
+    {title:"学习新东西，偏爱？",opts:["实操、看得见的成果(S)","概念、脑洞想象(N)"]},
+    {title:"评价朋友，你更在意？",opts:["做事靠谱(T)","待人温柔(F)"]},
+    {title:"临时改变计划，你会？",opts:["烦躁不适应(J)","觉得新鲜有趣(P)"]},
+    {title:"情绪压抑时，你会？",opts:["找人倾诉(E)","自己消化(I)"]},
+    {title:"听故事，你更容易记住？",opts:["细节经过(S)","寓意和氛围感(N)"]},
+    {title:"争论一件事，你追求？",opts:["对错逻辑(T)","大家和睦(F)"]},
+    {title:"桌面、日程一般？",opts:["整齐有序(J)","随性杂乱(P)"]},
+    {title:"认识新朋友，你主动吗？",opts:["主动搭话(E)","等别人来找自己(I)"]},
+    {title:"畅想未来，你更喜欢？",opts:["脚踏实地的目标(S)","很多可能性(N)"]},
+    {title:"被误会，你会？",opts:["冷静解释道理(T)","委屈难过(F)"]},
+    {title:"出去玩，你喜欢？",opts:["定好路线(J)","走到哪算哪(P)"]},
+    {title:"灵感来了，你会？",opts:["马上分享给别人(E)","先记录给自己看(I)"]},
+    {title:"选礼物，你看重？",opts:["实用耐用(S)","有心意氛围感(N)"]},
+    {title:"团队分工，你更适合？",opts:["按规则执行(T)","照顾大家感受(F)"]},
+    {title:"有多项任务，你习惯？",opts:["一件一件做完(J)","同时兼顾几件(P)"]},
+    {title:"压力大的时候，你想要？",opts:["陪伴聊天(E)","安静独处(I)"]},
+    {title:"看别人的经历，你更容易？",opts:["吸取经验(S)","联想到自己的故事(N)"]},
+    {title:"别人犯错，你第一反应？",opts:["客观指出问题(T)","体谅对方难处(F)"]},
+    {title:"答应别人的事，你？",opts:["一定做到(J)","看情况调整(P)"]},
+    {title:"热闹场合，你是？",opts:["活跃气氛的人(E)","默默旁观的人(I)"]},
+    {title:"做选择，你依赖？",opts:["过往经验(S)","内心预感(N)"]},
+    {title:"赞美别人，你更擅长？",opts:["肯定能力(T)","肯定性格温柔(F)"]},
+    {title:"假期结束，你通常？",opts:["提前收心(J)","很难缓过来(P)"]},
+    {title:"想法很多，你会？",opts:["说出来讨论(E)","自己慢慢梳理(I)"]},
+    {title:"遇到未知事物，你？",opts:["先看风险(S)","好奇想尝试(N)"]},
+    {title:"和人产生分歧，你？",opts:["就事论事(T)","害怕关系变差(F)"]},
+    {title:"重要事情，你？",opts:["提前准备(J)","临场发挥(P)"]},
+    {title:"获得夸奖，你会？",opts:["开心和别人分享(E)","悄悄开心(I)"]},
+    {title:"解决问题，你偏好？",opts:["成熟稳妥办法(S)","新奇思路(N)"]},
+    {title:"看到别人难过，你？",opts:["理性分析办法(T)","跟着心疼(F)"]},
+    {title:"生活节奏，你想要？",opts:["稳定可控(J)","自由不受限(P)"]},
 ];
 
-const resultList = [
-{name:"孙悟空",pct:91,tags:["破局","桀骜","野性"],voice:"纵有金箍加身，不改凌云本心。",
-self:"你和孙悟空相似的，不在于神通，而是面对困境的方式。讨厌拖沓、虚伪与束缚，看见阻碍就想主动突破。愿意为自己在意的人、认定的目标迎难而上，哪怕前路布满磨难，也不愿低头认输。",
-score:[92,45,90,78,65,40,95,75],
-b1:"开创：不甘困在一成不变的环境，遇到僵局总想撕开新出路，拒绝躺平内耗。",
-b2:"洞察：看人直觉敏锐，能快速看穿伪装，不容易被花言巧语蒙蔽。",
-b3:"决断：紧急状况不容易反复纠结，优先行动，适合混乱局面里打开突破口。",
-real:"习惯独自啃难题，遇到不公会直接表达，主见很强，讨厌被条条框框限制。求职做事想要掌控感，偏爱有挑战、能发挥能力的机会。",
-r1:"性子急躁，紧盯目标的时候容易忽略人情，赢了事情，消耗关系。",
-r2:"果敢过度容易变成冲动。压力上头时不要硬碰硬，很多关卡不是只靠硬闯就能通关。",
-r3:"保留勇气，学会等候时机，刚柔并济，路才能走得长远。"},
-{name:"如来佛祖",pct:88,tags:["全局","包容","定局"],voice:"万般起落，皆在方寸之间。",
-self:"你像如来，擅长站在更高视角看整件事，不会困在眼前一时得失。情绪稳定，很少被小事牵动，看得懂人性的利弊，包容不同人的选择，不急于评判对错。",
-score:[80,60,55,94,50,88,85,70],
-b1:"洞察：习惯拉长时间线看待问题，不容易被当下的情绪裹挟。",
-b2:"统筹：能看清多方利益，懂得平衡局面，适合做兜底规划。",
-b3:"全局：不容易陷入局部矛盾，抓得住核心主线。",
-real:"遇事冷静，很少和人争执，喜欢旁观理清脉络。别人慌乱的时候，你往往是最稳的那个，适合战略、规划类方向。",
-r1:"容易抽离太远，别人会觉得你疏离、缺少烟火气。",
-r2:"看得太通透，有时会懒得参与，错失亲身感受的机会。",
-r3:"不必一直站在旁观者位置，偶尔投入情绪，才不会和身边人脱节。"},
-{name:"观音菩萨",pct:87,tags:["渡人","温柔","疏导"],voice:"慈悲不是无底线，是择时伸手。",
-self:"你内心柔软，擅长看见别人的难处，愿意给陷入低谷的人指引。你不是一味老好人，懂得把握分寸，知道什么时候帮、什么时候放手，温柔但有底线。",
-score:[65,95,60,82,78,72,60,80],
-b1:"共情：很容易感知他人情绪，擅长安抚、疏导别人。",
-b2:"表达：说话温和有说服力，不容易引发对立。",
-b3:"担当：答应的帮扶会持续跟进，不会半途丢下别人。",
-real:"朋友难过总来找你倾诉，你习惯当情绪树洞。求职、生活里，你愿意给别人机会，待人宽厚。",
-r1:"容易承接别人的负面情绪，把他人压力内化，自己悄悄疲惫。",
-r2:"慈悲边界模糊，容易被索取型的人消耗。",
-r3:"助人之前先顾好自己，你的善意，不需要无条件供给所有人。"},
-{name:"镇元大仙",pct:85,tags:["世外","自持","清高"],voice:"守好一方天地，不逐世间喧嚣。",
-self:"你偏爱清净，不热衷世俗的竞争热闹，有自己的一套价值体系。不刻意讨好谁，实力藏在深处，只和同频的人相交，外人很难走进你的内心。",
-score:[70,50,48,86,35,68,92,62],
-b1:"独立：精神自给自足，不需要靠别人认可证明自己。",
-b2:"洞察：对人心真假感知敏锐，不爱无效社交。",
-b3:"自持：不容易跟风内卷，守住自己的节奏。",
-real:"不爱凑热闹，很多事情懒得解释，外人看你清冷。你有自己热爱的小世界，比起合群，更在意自在。",
-r1:"过度封闭，遇到难处习惯独自硬扛，不愿求助。",
-r2:"清高容易变成固执，拒绝新的可能性。",
-r3:"不必拒绝所有外界联结，合适的伙伴，会帮你拓宽边界。"},
-{name:"牛魔王",pct:84,tags:["枭雄","强势","重义"],voice:"我有傲骨，亦有牵挂。",
-self:"你气场强、有野心，有能力搭建属于自己的圈子。重情义，对认可的人十分仗义，但自尊心极强，受不了被压制、被轻视。",
-score:[88,52,75,70,62,78,86,76],
-b1:"开创：有野心，愿意主动开拓资源，不甘居于人下。",
-b2:"统筹：擅长聚拢人脉，搭建自己的小体系。",
-b3:"担当：对自己人愿意兜底，危难不会轻易出卖同伴。",
-real:"有领导力，适合牵头做事。恩怨分明，你善待善待你的人，谁冒犯你，你不会一味忍让。",
-r1:"自尊心太重，输不起，被否定的时候容易对抗。",
-r2:"好胜心过头，容易为了面子硬撑，忽略现实利弊。",
-r3:"强者也可以低头，暂时退让不是认输，是蓄力。"},
-{name:"二郎神",pct:86,tags:["克制","清醒","自持"],voice:"本领在手，喜怒不形于色。",
-self:"你实力很强，但不爱张扬。遇事冷静克制，分得清公私，情绪很少外露。有自己的原则，不会轻易被人情裹挟，清醒独立。",
-score:[82,55,72,84,48,74,90,78],
-b1:"独立：习惯靠自己解决问题，不喜欢依附别人。",
-b2:"洞察：细节观察力强，能捕捉别人忽略的线索。",
-b3:"克制：情绪稳定，越是紧急越不容易乱阵脚。",
-real:"低调实力派，很少主动炫耀成果。做事靠谱，别人很难拿捏你的情绪，边界感很强。",
-r1:"习惯压抑情绪，负面感受长期堆积，容易突然爆发。",
-r2:"过于克制，身边人很难感受到你的真心，容易有距离感。",
-r3:"不必永远保持冷静，适当流露情绪，不是软弱。"},
-{name:"唐僧",pct:86,tags:["信念","坚守","自持"],voice:"路远山险，初心不改。",
-self:"你强大的地方不在于本领，而在于稳定的信念。哪怕反复受挫、看不到终点，也愿意坚持认定的方向。心怀善意，包容他人，但核心原则很难动摇。",
-score:[60,88,42,50,72,55,65,85],
-b1:"坚守：认准目标之后，漫长等待和挫折很难劝退你，相信长期价值。",
-b2:"共情：体谅别人难处，愿意给人改错机会，包容度很高。",
-b3:"担当：承诺的事会坚持到底，是团队里稳定的精神支柱。",
-real:"选方向优先看价值观合不合，不爱走捷径。求职、生活宁愿慢一点，也不想违背本心。",
-r1:"信念执念过重，容易固执，看不见这条路已经不适合自己。",
-r2:"心软容易轻信他人，分不清善意和伪装。",
-r3:"坚持初心的同时，也要学会辨别，善良要有铠甲。"},
-{name:"猪八戒",pct:83,tags:["人间","通透","松弛"],voice:"苦日子好好过，好日子好好享受。",
-self:"你懂得享受当下，不喜欢把自己逼到绝境。情绪来得快、去得也快，不会长期钻牛角尖。看似懒散，其实心里通透，分得清什么重要、什么不必较真。",
-score:[55,75,50,68,82,45,58,60],
-b1:"松弛：拒绝无休止内耗，懂得照顾自己的感受。",
-b2:"表达：很会调节气氛，能快速缓和尴尬氛围。",
-b3:"自愈：不容易长期陷在负面情绪里，复原力强。",
-real:"累了就想停下来休息，不喜欢无休止内卷。人缘不错，和你相处轻松无压力，你不喜欢沉重压抑的氛围。",
-r1:"容易避难趋易，遇到难啃的事下意识想逃避。",
-r2:"过度追求舒服，长期缺少持续沉淀，容易错过成长机会。",
-r3:"享受生活没有错，但关键的路，还是要咬牙坚持一段。"},
-{name:"沙僧",pct:88,tags:["踏实","兜底","稳重"],voice:"默默负重，守好分内之事。",
-self:"你不抢风头，不爱争辩，专注做好手里的每一件事。靠谱、有耐心，团队里最稳的后盾，别人都慌的时候，你默默把琐事扛起来。",
-score:[48,78,35,60,40,75,70,90],
-b1:"担当：交代给你的事，一定会落地，极少掉链子。",
-b2:"统筹：擅长处理细碎繁杂的事务，维持秩序稳定。",
-b3:"稳重：情绪波动小，适合长期稳定的协作。",
-real:"默默干活，很少主动邀功。求职很适合稳定、需要细心、长期深耕的岗位，是大家信赖的伙伴。",
-r1:"习惯被动等待安排，很少主动争取机会，容易被忽略。",
-r2:"长期承担别人的杂活，不懂拒绝，消耗自己。",
-r3:"踏实是优点，也要学会主动表达需求，争取属于你的机会。"},
-{name:"白龙马",pct:84,tags:["隐忍","温柔","沉潜"],voice:"不必人人看见，自有奔赴方向。",
-self:"你藏起锋芒，默默承担长途跋涉的辛苦。很少主动诉苦，把委屈和期待放在心底，安静朝着目标前行，温柔又有韧劲。",
-score:[52,80,44,66,32,62,78,86],
-b1:"沉潜：愿意长期默默投入，不追求短期掌声。",
-b2:"独立：哪怕没人陪伴，也能独自走完漫长路程。",
-b3:"韧劲：不怕漫长枯燥，耐力极强。",
-real:"存在感不强，习惯默默付出。很多努力别人看不见，你很少主动诉说辛苦，耐得住漫长的等待。",
-r1:"习惯压抑需求，长久之后容易觉得自己的付出不值。",
-r2:"长期隐忍，积压情绪，等到爆发时很难挽回。",
-r3:"你的付出值得被看见，不必一直默默藏起来。"},
-{name:"红孩儿",pct:82,tags:["炽热","叛逆","锋芒"],voice:"我自有心火，不轻易归顺。",
-self:"你热烈鲜活，有强烈的自我，讨厌被长辈、规则强行管束。敢爱敢恨，情绪外放，认准的想法很难被说服，生命力旺盛。",
-score:[85,62,78,64,70,42,88,65],
-b1:"叛逆：拒绝被规训，想要走属于自己的路。",
-b2:"开创：想法大胆，敢尝试别人不敢做的选择。",
-b3:"炽热：做事有热情，投入的时候全力以赴。",
-real:"讨厌别人对你指手画脚，不喜欢被安排人生。创造力强，适合创意、自由发挥的方向。",
-r1:"逆反心理强，哪怕对方是善意建议，也下意识抗拒。",
-r2:"情绪上头容易冲动对抗，容易给自己树敌。",
-r3:"保留热烈，学会分辨建议，不是所有约束都是枷锁。"},
-{name:"玉兔精",pct:81,tags:["纯粹","温柔","浪漫"],voice:"心有月光，不染世俗浑浊。",
-self:"你内心干净柔软，自带浪漫感，愿意相信美好。对世界抱有温柔期待，不喜欢勾心斗角，向往简单真诚的关系。",
-score:[46,88,52,58,74,40,55,63],
-b1:"共情：心思细腻，很容易捕捉到温柔美好的细节。",
-b2:"表达：自带氛围感，擅长发现生活里的浪漫。",
-b3:"纯粹：不容易被世俗的算计磨掉本心。",
-real:"向往简单真诚的人际，讨厌复杂的算计。很容易被小事治愈，喜欢温柔松弛的环境。",
-r1:"想法太理想化，容易低估人性的复杂。",
-r2:"纯粹容易变成天真，容易被有心之人利用。",
-r3:"保持浪漫，同时给自己建立保护的边界。"},
-{name:"铁扇公主",pct:85,tags:["独立","坚韧","顾家"],voice:"守住自己的一方天地，不依附任何人。",
-self:"你清醒独立，不靠别人兜底，有能力守护自己在意的人和生活。恩怨分明，柔软只留给家人，对外有棱角，不好欺负。",
-score:[78,72,65,76,66,80,84,82],
-b1:"统筹：擅长打理自己的生活、资源，把日子稳住。",
-b2:"坚韧：遭遇变故之后，有能力重新站稳。",
-b3:"边界：懂得守护自己的利益，不会一味退让。",
-real:"经济、精神上都想要独立，不喜欢依附别人。会用心守护自己重视的人，有很强的领地意识。",
-r1:"防备心太重，很难完全信任别人。",
-r2:"习惯独自扛所有压力，不愿意示弱求助。",
-r3:"强大不是永远不依靠任何人，适当示弱不是软弱。"},
-{name:"白骨精",pct:80,tags:["敏感","清醒","求生"],voice:"身处逆境，只能自己为自己谋划。",
-self:"你敏感细腻，很早就看懂人性现实，危机感很强。习惯提前为自己打算，缺少安全感，很害怕落入被动无助的处境。",
-score:[74,48,68,80,56,64,82,52],
-b1:"洞察：对风险感知敏锐，能提前嗅到危机。",
-b2:"开创：绝境里总能想出办法自救。",
-b3:"清醒：很少幻想别人无条件来拯救自己。",
-real:"危机感很重，习惯性未雨绸缪。很难完全放下防备，不容易信任他人，凡事优先自保。",
-r1:"过度警惕，容易把善意当成敌意。",
-r2:"长期活在防备里，很难安心享受松弛的关系。",
-r3:"世界不全是危险，允许一部分人慢慢走进你的世界。"},
-{name:"蜘蛛精",pct:79,tags:["灵动","细腻","共情"],voice:"心思千丝万缕，温柔藏于方寸。",
-self:"你心思细腻，感知力极强，擅长捕捉微妙的情绪变化。灵动多变，不喜欢死板的模式，擅长用柔软的方式处理事情。",
-score:[54,86,62,74,76,50,64,58],
-b1:"共情：能读懂别人没说出口的情绪。",
-b2:"表达：懂得委婉沟通，很少硬碰硬起冲突。",
-b3:"灵动：适应力强，能灵活调整方式。",
-real:"观察力很强，别人的微表情、语气变化你都能察觉到。讨厌直白激烈的争吵，更喜欢迂回温和的方式解决问题。",
-r1:"容易想太多，反复解读别人一句话，陷入内耗。",
-r2:"习惯迂回，有需求不敢直接说，别人很难读懂你。",
-r3:"细腻很好，重要的诉求，直接表达会省去很多内耗。"},
-{name:"蝎子精",pct:82,tags:["高冷","强势","有锋芒"],voice:"不接受轻视，惹我便会反击。",
-self:"你外表清冷，不爱客套，有自己的底线。平时安静不惹事，但一旦被冒犯，会直接反击，不会忍气吞声。",
-score:[80,44,70,72,52,58,86,60],
-b1:"独立：不需要依靠别人撑腰，自己就能保护自己。",
-b2:"决断：底线被触碰时，不会犹豫退让。",
-b3:"锋芒：别人不敢随意拿捏、欺负你。",
-real:"不爱无效社交，说话简洁直接，不喜欢客套寒暄。边界清晰，谁越界，你会明确制止。",
-r1:"锋芒太露，容易让人觉得不好接近。",
-r2:"反击的阈值太低，小事也容易直接对立。",
-r3:"有底线是好事，不必所有冒犯都立刻还击，可以分轻重。"},
-{name:"太乙真人",pct:83,tags:["松弛","通透","随性"],voice:"万事自有安排，不必强行强求。",
-self:"你心态松弛，看淡得失，不执着于一定要拿到某个结果。接纳变化，顺其自然，不会因为计划落空而崩溃，自在随心。",
-score:[60,70,56,78,64,54,76,66],
-b1:"通透：接纳世事无常，很少和已经发生的事较劲。",
-b2:"洞察：看得开，不容易困在执念里。",
-b3:"松弛：情绪稳定，不容易被焦虑裹挟。",
-real:"内卷大潮里很难卷起来，你更在意自己舒服。一件事尽力就好，结果好坏都能接受。",
-r1:"过度佛系，缺少争取的动力，容易错过机会。",
-r2:"顺其自然变成躺平，该努力的时候也选择摆烂。",
-r3:"松弛是心态，不是行动，该争取的时候，也要主动伸手。"},
-{name:"太上老君",pct:87,tags:["沉稳","智者","沉淀"],voice:"慢火淬炼，长久方能成器。",
-self:"你信奉厚积薄发，喜欢沉淀、打磨，不急着求速成。做事稳重，三思而后行，擅长钻研、深耕，相信时间的力量。",
-score:[72,60,58,88,46,82,80,74],
-b1:"沉淀：愿意长期深耕，拒绝急功近利。",
-b2:"统筹：擅长打磨体系、规则，把事情做扎实。",
-b3:"远见：看得到长期价值，不被短期收益诱惑。",
-real:"不喜欢速成、投机的路子，愿意慢慢打磨自己。适合技术、研究、长期积累的方向，越老越吃香。",
-r1:"节奏太慢，在快速变化的环境里容易跟不上。",
-r2:"过度追求完美打磨，迟迟不肯落地行动。",
-r3:"沉淀没错，不用等万事完美才开始，边做边打磨。"},
-{name:"金角大王",pct:81,tags:["谨慎","稳妥","守成"],voice:"步步小心，不冒无意义的风险。",
-self:"你谨慎稳重，做决定前反复评估风险，不喜欢盲目冒险。擅长守住现有的资源，求稳优先，不喜欢失控。",
-score:[64,58,42,76,50,78,72,76],
-b1:"守成：优先守住已有成果，不赌不确定的机会。",
-b2:"统筹：擅长管理已有资源，规避风险。",
-b3:"稳妥：很少踩大坑，容错率高。",
-real:"做选择偏向保守，求职优先稳定、风险低的选项。不喜欢突发变化，提前规划好才安心。",
-r1:"害怕风险，不敢尝试新机会，长期原地踏步。",
-r2:"过度谨慎，会错过高潜力的机遇。",
-r3:"稳妥是保护壳，偶尔可以尝试可控范围内的小冒险。"},
-{name:"银角大王",pct:80,tags:["机灵","变通","善谋"],voice:"路走不通，就换一个法子。",
-self:"你脑子灵活，应变能力强，不会死磕一条路。遇到阻碍，优先想别的办法，擅长借力、灵活变通。",
-score:[70,64,74,72,72,60,68,62],
-b1:"开创：不钻牛角尖，懂得变通方案。",
-b2:"表达：擅长沟通周旋，借力解决难题。",
-b3:"应变：突发状况下，很快找到替代方案。",
-real:"讨厌死板流程，遇到卡点会想绕路解决。适应力强，多变的环境反而能发挥你的优势。",
-r1:"太擅长绕路，缺少啃硬骨头的定力。",
-r2:"总想找捷径，基础沉淀不够，根基不稳。",
-r3:"变通是优势，核心难关，还是需要沉下心硬啃。"},
-{name:"黑熊精",pct:82,tags:["内敛","上进","热爱"],voice:"默默精进，心有所好，稳步向上。",
-self:"你低调内敛，不爱张扬，但是有自己热爱的东西，愿意持续精进。待人有礼，有分寸，默默提升自己，不与人争抢风头。",
-score:[66,66,64,74,44,70,78,70],
-b1:"上进：安静深耕，持续提升自己。",
-b2:"洞察：对自己热爱的领域感知敏锐。",
-b3:"自持：可以长期专注在爱好和目标上。",
-real:"闷头学习、默默提升，很少主动炫耀成果。审美和爱好有自己的坚持，安静且有力量。",
-r1:"习惯默默努力，不懂得展示自己，才华容易被埋没。",
-r2:"沉浸在自己的世界，忽略外界机会。",
-r3:"持续精进很好，合适的时机，大胆展示你的成果。"},
-{name:"黄眉老祖",pct:80,tags:["自信","骄傲","要强"],voice:"我信自己的道，不愿屈居人下。",
-self:"你自信要强，对自己的能力很认可，有自己的一套想法。自尊心强，希望被认可，不甘平庸，想做出一番成绩。",
-score:[76,50,72,70,68,74,80,68],
-b1:"自信：相信自己的判断，不容易被别人否定打倒。",
-b2:"开创：敢搭建属于自己的体系和节奏。",
-b3:"要强：不甘躺平，有向上的动力。",
-real:"很在意别人对你能力的评价，喜欢证明自己。适合有竞争、可以发挥实力的赛道。",
-r1:"容易自负，听不进反对意见。",
-r2:"自尊心太强，输了之后很难调整心态。",
-r3:"自信珍贵，但也要接纳自己有局限，别人的意见可以参考。"},
-{name:"六耳猕猴",pct:84,tags:["矛盾","内耗","自我拉扯"],voice:"我分不清，我到底想要成为谁。",
-self:"你内心充满拉扯，常常有两种声音对抗。一边想突破、一边害怕失败；一边想做自己，一边在意别人眼光，经常自我怀疑。",
-score:[62,74,76,82,58,48,70,60],
-b1:"矛盾：理想和现实、自我和外界持续拉扯。",
-b2:"洞察：非常擅长向内思考，读懂自己复杂的情绪。",
-b3:"自省：一直在探索自我，慢慢找到属于自己的定位。",
-real:"经常纠结、反复思考，做选择很艰难。容易和别人对比，怀疑自己到底适合什么，迷茫感很重。",
-r1:"反复内耗，迟迟无法行动，大量时间消耗在思想斗争。",
-r2:"过度自我怀疑，分不清哪些是自己真正想要的。",
-r3:"不必一次性找到标准答案，先行动起来，在过程里慢慢认清自己。"},
-{name:"黑化潜龙白龙马",pct:83,tags:["隐忍蓄力","厚积爆发"],voice:"沉寂不是认输，是等待破局之时。",
-self:"平时安静克制，默默承受委屈，看起来温和顺从。但内心藏着很强的力量，底线一旦被击穿，会彻底爆发，不再妥协。",
-score:[75,68,70,78,38,66,82,74],
-b1:"蓄力：擅长长期忍耐，悄悄积攒力量。",
-b2:"独立：哪怕孤身一人，也能守住底线。",
-b3:"爆发：平时温和，关键时刻绝不任人拿捏。",
-real:"平时很好说话，愿意退让包容。但心里有一条清晰底线，一旦越过，会彻底收回所有善意。",
-r1:"一直压抑情绪，等到爆发的时候，很难挽回局面。",
-r2:"别人会误以为你没有脾气，不断试探你的底线。",
-r3:"不用等到忍无可忍才反击，小事就可以温和地亮出边界。"}
-];
-
-const dimName = ["决断","共情","开创","洞察","表达","统筹","独立","担当"];
-const storageKey = "xiyou_test_done";
+// 24个西游角色结果，四维匹配
+const resultMap = {
+    "ESTJ":{name:"唐僧",tag:"执着渡人｜信念至上",text:"你心怀坚定的理想，有自己不容动摇的原则，愿意为目标长期坚持。待人有分寸，有责任感，有时会执着于自己认定的正道，容易忽略身边人的感受。"},
+    "ESTP":{name:"孙悟空",tag:"果敢灵动｜不畏强权",text:"你行动力极强，反应快，敢闯敢拼，讨厌条条框框的束缚。聪明敏锐，擅长随机应变，有正义感，性子直率，容易冲动，不服管束。"},
+    "ESFJ":{name:"观音菩萨",tag:"温柔慈悲｜共情守护",text:"你善于体察他人情绪，愿意包容、帮助身边的人，擅长维系关系。待人温和有耐心，习惯照顾别人，常常把他人需求放在前面。"},
+    "ESFP":{name:"猪八戒",tag:"热爱生活｜及时行乐",text:"你喜欢轻松热闹，懂得享受当下，性格鲜活直白，不喜欢沉重压抑。心地不坏，容易心软，自制力偏弱，容易偷懒、贪图舒服。"},
+    "ENTJ":{name:"如来佛祖",tag:"大局掌控｜运筹帷幄",text:"你格局开阔，擅长布局，目标感极强，擅长统筹规划。自带强大气场，做事果决，习惯站在全局思考，容易给人距离感。"},
+    "ENTP":{name:"太白金星",tag:"巧思善辩｜灵活变通",text:"你脑洞多，擅长沟通斡旋，不喜欢死板的规则，乐于寻找新思路。口才好，善于周旋，想法跳脱，有时很难沉下心长期坚持一件事。"},
+    "ENFJ":{name:"文殊菩萨",tag:"引路人｜心怀众生",text:"你擅长读懂别人，愿意引导、成全他人，自带感染力。有理想，重视价值，愿意去相信别人，也容易为了他人消耗自己。"},
+    "ENFP":{name:"玉兔精",tag:"浪漫灵动｜热爱奇遇",text:"你想象力丰富，向往新鲜有趣的生活，内心柔软浪漫。讨厌枯燥重复，跟着热情走，容易三分钟热度，害怕被束缚。"},
+    "ISTJ":{name:"沙和尚",tag:"踏实守诺｜安稳可靠",text:"你稳重内敛，责任心强，做事踏实靠谱，守规矩、重承诺。话不多，默默承担，不喜欢冒险，习惯做好分内的事，不太擅长表达情绪。"},
+    "ISTP":{name:"二郎神",tag:"冷静自持｜实力内敛",text:"你冷静理性，动手能力强，遇事沉着，擅长独立解决难题。不爱多言，边界感强，不喜欢被说教，有自己的一套判断标准。"},
+    "ISFJ":{name:"白龙马",tag:"默默付出｜温柔隐忍",text:"你内敛温柔，默默承担，忠诚度很高，习惯守护在意的人。不擅长主动索取，常常委屈自己，很少说出自己的需求。"},
+    "ISFP":{name:"杏仙",tag:"诗意敏感｜随心自在",text:"你内心细腻敏感，偏爱美感，不喜争斗，向往自在松弛的状态。遵从内心感受，不爱争抢，害怕冲突，习惯避开压力。"},
+    "INTJ":{name:"菩提祖师",tag:"通透深远｜独立悟道",text:"你擅长长远思考，洞察力强，喜欢独立钻研，目标清晰。自带疏离感，不喜欢无效社交，有自己的精神世界，很难被别人说服。"},
+    "INTP":{name:"镇元大仙",tag:"随性思辨｜潜心自洽",text:"你喜欢思考本质，好奇心强，偏爱安静独处，享受思考的乐趣。对世俗纷争兴趣不大，节奏慢悠悠，不喜欢被催促。"},
+    "INFJ":{name:"地藏王菩萨",tag:"悲悯内省｜看透人心",text:"你共情力很深，洞察力强，能感知别人藏起来的情绪。内心有坚定的信念，习惯向内思考，常常独自消化沉重情绪。"},
+    "INFP":{name:"百花羞公主",tag:"温柔理想｜内心纯粹",text:"你内心有柔软的理想世界，敏感细腻，重视真诚。害怕冲突，容易内耗，常常在现实和内心理想之间拉扯。"},
+    "ETJS":{name:"托塔李天王",tag:"守正持重｜规矩为先",text:"你重视秩序与责任，有担当，懂得权衡利弊，做事稳重。习惯按章法行事，不喜欢出格冒险，责任心强。"},
+    "ETPS":{name:"红孩儿",tag:"热烈桀骜｜敢爱敢恨",text:"你生命力旺盛，情绪直白，敢冲敢闯，爱恨分明。不喜欢被压制，爆发力强，容易冲动，需要学会收敛锋芒。"},
+    "EFJS":{name:"嫦娥",tag:"温柔自持｜体面从容",text:"你气质柔和，懂得照顾旁人感受，维持体面。待人友善，情绪克制，习惯保持距离，很少袒露脆弱一面。"},
+    "EFPS":{name:"金角大王",tag:"随性快活｜自在随心",text:"你喜欢轻松自在，不爱紧绷，跟着心意行动，享受当下。心思简单，容易被诱惑，自控力偏弱。"},
+    "NTJS":{name:"玉皇大帝",tag:"统筹全局｜隐忍权衡",text:"你擅长权衡各方，懂得隐忍布局，顾全大局。情绪不外露，习惯权衡利弊，不轻易表露真实想法。"},
+    "NTPS":{name:"哪吒",tag:"反叛清醒｜自有本心",text:"你不盲从权威，有独立想法，敢打破固有规则，性格鲜明。爱恨分明，不愿被世俗定义，有倔强的底色。"},
+    "NFJS":{name:"黎山老母",tag:"慈悲通透｜渡化人心",text:"你阅历感强，包容力强，善于点醒别人，温和有力量。善于看见他人难处，愿意包容，自带治愈感。"},
+    "NFPS":{name:"琵琶精",tag:"热烈浪漫｜忠于自我",text:"你忠于自己的感受，热烈鲜活，不勉强迎合别人。内心浪漫，讨厌虚伪，敢表达自己想要的东西。"},
+};
 
 let current = 0;
-let selectAns = Array(questions.length).fill(null);
-let score = [0,0,0,0,0,0,0,0];
-
-function showPage(id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-}
+let score = {E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
+let selectedAnswers = [];
 
 function startTest(){
-  current = 0;
-  selectAns = Array(questions.length).fill(null);
-  renderQ();
-  showPage("page-test");
+    document.getElementById("homePage").classList.remove("active");
+    document.getElementById("quizPage").classList.add("active");
+    renderQuestion();
 }
-
-function renderQ(){
-  const q = questions[current];
-  document.getElementById("current-q").innerText = current+1;
-  document.getElementById("q-text").innerText = q.q;
-  let html = "";
-  html += `<div class="option ${selectAns[current]==='a'?'selected':''}" onclick="pick('a')">A. ${q.a}</div>`;
-  html += `<div class="option ${selectAns[current]==='b'?'selected':''}" onclick="pick('b')">B. ${q.b}</div>`;
-  document.getElementById("opt-wrap").innerHTML = html;
-  document.getElementById("btn-prev").disabled = current===0;
+function renderQuestion(){
+    const q = questions[current];
+    document.getElementById("qIndex").innerText = `第 ${current+1} / ${questions.length} 题`;
+    document.getElementById("qTitle").innerText = q.title;
+    const wrap = document.getElementById("optionWrap");
+    wrap.innerHTML = "";
+    q.opts.forEach((opt,idx)=>{
+        const div = document.createElement("div");
+        div.className = "option-item";
+        if(selectedAnswers[current] === idx) div.classList.add("selected");
+        div.innerText = opt;
+        div.onclick = ()=>{
+            selectedAnswers[current] = idx;
+            renderQuestion();
+        }
+        wrap.appendChild(div);
+    })
+    document.getElementById("prevBtn").style.visibility = current===0 ? "hidden":"visible";
 }
-
-function pick(v){
-  selectAns[current] = v;
-  renderQ();
-}
-
-function nextQuestion(){
-  if(selectAns[current]==null) return;
-  if(current < questions.length-1){
-    current++;
-    renderQ();
-  }else{
-    // 计分
-    score = [0,0,0,0,0,0,0,0];
-    for(let i=0;i<questions.length;i++){
-      const q = questions[i];
-      const sel = selectAns[i];
-      const w = sel==='a' ? q.w : q.w.map(x=>2-x);
-      for(let d=0;d<8;d++) score[d] += w[d];
-    }
-    localStorage.setItem(storageKey,"1");
-    localStorage.setItem("xiyou_answers", JSON.stringify(selectAns));
-    showResult();
-  }
-}
-
 function prevQuestion(){
-  if(current>0){current--;renderQ();}
-}
-
-function calcResult(){
-  let bestIdx=0,bestVal=-999;
-  for(let i=0;i<resultList.length;i++){
-    let s=0;
-    for(let d=0;d<8;d++) s += score[d] * (resultList[i].score[d]/100);
-    if(s>bestVal){bestVal=s;bestIdx=i;}
-  }
-  return resultList[bestIdx];
-}
-
-function renderBar(arr){
-  let html="";
-  for(let i=0;i<8;i++){
-    html += `<div class="bar-wrap"><div class="bar-line"><div class="bar-name">${dimName[i]}</div><div class="bar-bg"><div class="bar-fill" style="width:${arr[i]}%"></div></div><div class="bar-val">${arr[i]}</div></div></div>`;
-  }
-  return html;
-}
-
-function showResult(){
-  const res = calcResult();
-  document.getElementById("resPercent").innerText = res.pct + "%";
-  document.getElementById("resName").innerText = res.name;
-  document.getElementById("resTags").innerHTML = res.tags.map(t=>`<span class="tag">${t}</span>`).join("");
-  document.getElementById("resVoice").innerText = "“"+res.voice+"”";
-  document.getElementById("resSelf").innerText = res.self;
-  document.getElementById("barBox").innerHTML = renderBar(res.score);
-  document.getElementById("base1").innerText = res.b1;
-  document.getElementById("base2").innerText = res.b2;
-  document.getElementById("base3").innerText = res.b3;
-  document.getElementById("resReal").innerText = res.real;
-  document.getElementById("risk1").innerText = res.r1;
-  document.getElementById("risk2").innerText = res.r2;
-  document.getElementById("risk3").innerText = res.r3;
-  showPage("page-result");
-}
-
-window.onload = function(){
-  if(localStorage.getItem(storageKey)){
-    // 读取存档答案，重新计算结果
-    const saved = JSON.parse(localStorage.getItem("xiyou_answers") || "[]");
-    selectAns = saved.length === questions.length ? saved : Array(questions.length).fill(null);
-    score = [0,0,0,0,0,0,0,0];
-    for(let i=0;i<questions.length;i++){
-      const q = questions[i];
-      const sel = selectAns[i];
-      if(!sel) continue;
-      const w = sel==='a' ? q.w : q.w.map(x=>2-x);
-      for(let d=0;d<8;d++) score[d] += w[d];
+    if(current>0){
+        current--;
+        renderQuestion();
     }
-    showResult();
-  }else{
-    showPage("page-intro");
-  }
+}
+function nextQuestion(){
+    if(selectedAnswers[current] === undefined){
+        alert("请选择一个答案");
+        return;
+    }
+    if(current < questions.length -1){
+        current++;
+        renderQuestion();
+    }else{
+        calcResult();
+    }
+}
+function calcResult(){
+    score = {E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
+    for(let i=0;i<questions.length;i++){
+        const ansIdx = selectedAnswers[i];
+        const tag = questions[i].opts[ansIdx].match(/\((.+)\)/)[1];
+        score[tag]++;
+    }
+    let e = score.E>score.I ? "E":"I";
+    let s = score.S>score.N ? "S":"N";
+    let t = score.T>score.F ? "T":"F";
+    let j = score.J>score.P ? "J":"P";
+    let key = e+t+s+j;
+    if(!resultMap[key]) key = "INFP";
+    const res = resultMap[key];
+    document.getElementById("quizPage").classList.remove("active");
+    document.getElementById("resultPage").classList.add("active");
+    document.getElementById("resName").innerText = res.name;
+    document.getElementById("resTag").innerText = res.tag;
+    document.getElementById("resText").innerText = res.text;
+}
+function restartTest(){
+    current=0;
+    selectedAnswers=[];
+    score = {E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
+    document.getElementById("resultPage").classList.remove("active");
+    document.getElementById("homePage").classList.add("active");
 }
 </script>
 </body>
